@@ -1,3 +1,5 @@
+from random import randint
+
 def bubble_sort(arr):
     n = len(arr)
     for i in range(n-1):
@@ -28,35 +30,107 @@ def selection_sort(arr):
     return arr
 
 def shell_sort(arr):
-    n = len(arr)
-    T = [0]*n
-    k = n//2
-    while k > 0:
-        for i in range(0,k):
-            temp = insertion_sort(arr[i:n:k])
+    length = len(arr)
+    T = [0]*length
+    k = 1
+    Przyrosty = [1]
+    while Przyrosty[-1] < length:
+        Przyrosty.append((4**k)+(3*2**(k-1))+1)
+        k += 1
+
+    for przyrost in Przyrosty[::-1]:
+        for i in range(0,przyrost):
+            temp = insertion_sort(arr[i:length:przyrost])
             l = i
             for j in temp:
                 T[l] = j
-                l += k
-        k //=2
+                l += przyrost
     return T
 
-# def Partition_left(arr,start,end):
-#     x = arr[start]
-#     i = start
-#     j = end
-#     while True:
-#         while arr[i] < x:
-#             i += 1
-#         while arr[j] > x:
-#             j -= 1
-#         if i <= j:
-#             arr[i],arr[j] = arr[j],arr[i]
-#             i += 1
-#             j -=1
-#         else:
-#             return j
+
+def quick_sort_left_pivot(arr,p,r):
+    # print(arr,p,r)qq
+    if p<r:
+        q= left_pivot(arr,p,r)
+        quick_sort_left_pivot(arr,p,q-1)
+        quick_sort_left_pivot(arr,q+1,r)
+    return arr
+
+def left_pivot(arr,p,r):
+    pivot= arr[p]
+    i=p+1
+    j=r
+    while True:
+        while i<=j and arr[i]<=pivot:
+            i+=1
+        while i<=j and arr[j]>pivot:
+            j-=1
+        if i<=j:
+            arr[i],arr[j]=arr[j],arr[i]
+        else:
+            break
+    arr[p],arr[j]= arr[j],arr[p]
+    return j
 
 
+def quick_sort_random_pivot(arr,p,r):
+    if p<r:
+        q=random_pivot(arr,p,r)
+        quick_sort_random_pivot(arr,p,q-1)
+        quick_sort_random_pivot(arr,q+1,r)
+    return arr
 
-# print(Q_sort_left([3, 112, 74, 20, 143, 20, 196, 127, 118, 146, 114, 9, 186, 44, 111, 166, 55, 73, 29, 150, 94, 45, 38, 158, 43, 116, 78, 22, 121, 36, 180, 1, 68, 33, 71, 65, 15, 46, 149, 155, 181, 23, 39, 72, 130, 90, 9, 153, 73, 188, 101, 9, 28, 199, 13, 101, 59, 100, 16, 12, 42, 28, 7, 27, 196, 140, 86, 152, 177, 49, 3, 25, 27, 69, 119, 36, 153, 131, 35, 61, 153, 34, 2, 189, 194, 134, 144, 113, 55, 136, 128, 194, 44, 51, 115, 51, 69, 1, 73, 100, 112, 168, 158, 113, 98, 7, 146, 92, 7, 17, 149, 15, 110, 179, 114, 118, 147, 46, 0, 79, 179, 54, 124, 121, 178, 102, 130, 121, 179, 87, 111, 184, 118, 168, 51, 100, 147, 106, 141, 64, 35, 5, 187, 96, 200, 143, 188, 131, 35, 94, 155, 167, 92, 80, 56, 47, 197, 13, 80, 61, 50, 171, 76, 182, 4, 127, 106, 127, 21, 186, 68, 5, 37, 184, 43, 36, 40, 18, 40, 173, 159, 182, 84, 177, 153, 132, 74, 135, 135, 88, 143, 134, 72, 154, 188, 87, 159, 123, 82, 189]))
+def random_pivot(arr,p,r):
+    q= randint(p,r)
+    arr[p],arr[q]=arr[q],arr[p] #losowy element nie jest ułożony, trzeba go traktowac jak p przy lefcie
+    pivot= arr[p]
+    i=p+1
+    j=r
+    while True:
+        while i<=j and arr[i]<=pivot:
+            i+=1
+        while i<=j and arr[j]>pivot:
+            j-=1
+        if i<=j:
+            arr[i],arr[j]=arr[j],arr[i]
+        else:
+            break
+    arr[p],arr[j]=arr[j],arr[p]
+    return j
+
+###
+
+def heap_sort(arr):
+    n=len(arr) # czy len kosztuje czas? imo wiecej niz funkcja z przypisana wartoscia
+    for i in range (n//2-1,-1,-1): # n//2-1 liczba rodzicow
+        # print(f"\t 1) {arr}")
+        wjednejfunkcjigorzej(arr,n,i) #pierwsze wydobycie maxa
+        # print(f"\t 2) {arr}")
+    # print(f"\n\n{arr}\n\n")
+    for i in range(n-1,0,-1):
+        # print(f"\t 1) {arr}")
+        arr[i],arr[0]=arr[0],arr[i]
+        # print(f"\t 2) {arr}")
+        wjednejfunkcjigorzej(arr,i,0) #kopanie maxow
+        # print(f"\t 3) {arr}")
+
+    return arr
+
+def wjednejfunkcjigorzej(arr,n,i):
+    maxi= i
+    left=2*i+1
+    right=2*i+2
+    if left<n and arr[maxi]<arr[left]:
+        maxi=left
+    if right<n and arr[maxi]<arr[right]:
+        maxi=right
+    if maxi!=i:
+        arr[i],arr[maxi]=arr[maxi],arr[i]
+        wjednejfunkcjigorzej(arr,n,maxi)
+
+n=[4, 14, 7, 2, 6, 10, 3, 8, 11, 5, 12, 6, 9]
+# print(heap_sort(n))
+# print(quick_sort_left_pivot(n,0,len(n)-1))
+# print(quick_sort_random_pivot(n,0,len(n)-1))
+
+print(shell_sort(n))
