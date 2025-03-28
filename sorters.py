@@ -31,7 +31,6 @@ def selection_sort(arr):
 
 def shell_sort(arr):
     length = len(arr)
-    T = [0]*length
     k = 1
     Przyrosty = [1]
     while Przyrosty[-1] < length:
@@ -39,13 +38,23 @@ def shell_sort(arr):
         k += 1
 
     for przyrost in Przyrosty[::-1]:
-        for i in range(0,przyrost):
-            temp = insertion_sort(arr[i:length:przyrost])
-            l = i
-            for j in temp:
-                T[l] = j
-                l += przyrost
-    return T
+        for i in range(przyrost,length):
+            temp = arr[i]
+
+            j = i
+            while j >= przyrost and arr[j-przyrost]>temp:
+                arr[j]=arr[j-przyrost]
+                j -= przyrost
+
+            arr[j] = temp
+    return arr
+
+        # for i in range(0,przyrost):
+        #     temp = insertion_sort(arr[i:length:przyrost])
+        #     l = i
+        #     for j in temp:
+        #         T[l] = j
+        #         l += przyrost
 
 
 def quick_sort_left_pivot(arr,p,r):
