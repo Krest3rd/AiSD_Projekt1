@@ -11,12 +11,13 @@ def bubble_sort(arr):
 def insertion_sort(arr,gap=1):
     n = len(arr)
     for j in range(gap,n):
-        k = arr[j]
+        # k = arr[j]
         i = j
-        while i >= gap and arr[i-gap] > k:
-            arr[i] = arr[i-gap]
+        while i >= gap and arr[i-gap] > arr[i]:
+            arr[i],arr[i-gap] = arr[i-gap],arr[i]
+            # arr[i] = arr[i-gap]
             i = i - gap
-        arr[i] = k
+        # arr[i] = k
     return arr
 
 def selection_sort(arr):
@@ -75,32 +76,6 @@ def q_pivot(arr,p,r,random):
     arr[p],arr[j]= arr[j],arr[p]
     return j
 
-
-# def quick_sort_random_pivot(arr,p,r):
-#     if p<r:
-#         q=random_pivot(arr,p,r)
-#         quick_sort_random_pivot(arr,p,q-1)
-#         quick_sort_random_pivot(arr,q+1,r)
-#     return arr
-
-# def random_pivot(arr,p,r):
-#     q= randint(p,r)
-#     arr[p],arr[q]=arr[q],arr[p] #losowy element nie jest ułożony, trzeba go traktowac jak p przy lefcie
-#     pivot= arr[p]
-#     i=p+1
-#     j=r
-#     while True:
-#         while i<=j and arr[i]<=pivot: # w/m
-#             i+=1
-#         while i<=j and arr[j]>pivot: # w/m
-#             j-=1
-#         if i<=j:
-#             arr[i],arr[j]=arr[j],arr[i]
-#         else:
-#             break
-#     arr[p],arr[j]=arr[j],arr[p]
-#     return j
-
 ###
 
 def heap_sort(arr):
@@ -123,6 +98,3 @@ def heap_sort_helper(arr,n,i):
     if maxi!=i:
         arr[i],arr[maxi]=arr[maxi],arr[i]
         heap_sort_helper(arr,n,maxi)
-
-# n=[4, 14, 7, 2, 6, 10, 3, 8, 11, 5, 12, 6, 9]
-# print(T[::-1])
