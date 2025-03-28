@@ -8,12 +8,13 @@ benchmark() {
     # List of supported languages and their run commands
     runrust=""
     runjava=""
-    runpython=""
+    runpython="python3 ../main.py"
     runcpp=""
-    runexample="python3 example.py"
-    runcurrent=$runexample
+    runexample=""
+    runcurrent=$runpython
 
     echo "Benchmarking Algorithm $algorithm with input $input_file"
+    # echo "/usr/bin/time -f "%e" ${runcurrent} --algorithm $algorithm < $input_file 2>&1 >/dev/null"
     result=$(/usr/bin/time -f "%e" ${runcurrent} --algorithm $algorithm < $input_file 2>&1 >/dev/null)
     echo "Result $result"
     time=$(echo $result | head -1)  # Extract real time from the time command output
@@ -44,7 +45,7 @@ done
 
 # List of input file types
 #input_files=("random_array" "increasing_array" "decreasing_array" "constant_array" "a_shaped_array")
-input_files=("random_array")
+input_files=("decreasing_array")
 
 # Create or clear the CSV file
 echo "Algorithm,InputSize,Time" > benchmark_results.csv
