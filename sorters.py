@@ -8,14 +8,15 @@ def bubble_sort(arr):
                 arr[j],arr[j+1] = arr[j+1],arr[j]
     return arr
 
-def insertion_sort(arr):
+def insertion_sort(arr,gap=1):
     n = len(arr)
-    for j in range(1,n):
-        i = j-1
-        while i >= 0 and arr[i] > arr[j]:
-            arr[i+1] = arr[i]
-            i = i -1
-        arr[i+1] = arr[j]
+    for j in range(gap,n):
+        k = arr[j]
+        i = j
+        while i >= gap and arr[i-gap] > k:
+            arr[i] = arr[i-gap]
+            i = i - gap
+        arr[i] = k
     return arr
 
 def selection_sort(arr):
@@ -36,16 +37,8 @@ def shell_sort(arr):
         Przyrosty.append((4**k)+(3*2**(k-1))+1)
         k += 1
 
-    for przyrost in Przyrosty[::-1]:
-        for i in range(przyrost,length):
-            temp = arr[i]
-
-            j = i
-            while j >= przyrost and arr[j-przyrost]>temp:
-                arr[j]=arr[j-przyrost]
-                j -= przyrost
-
-            arr[j] = temp
+    for gap in Przyrosty[::-1]:
+        insertion_sort(arr,gap)
     return arr
 
         # for i in range(0,przyrost):
