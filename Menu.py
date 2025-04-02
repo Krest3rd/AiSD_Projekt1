@@ -93,9 +93,9 @@ def AlgSelect(arr,n):
         case 4:
             T = sort.heap_sort(arr)
         case 5:
-            T = sort.quick_sort(arr,0,len(arr)-1)
+            T = sort.quick_sort_left(arr,0,len(arr)-1)
         case 6:
-            T = sort.quick_sort(arr,0,len(arr)-1,random=True)
+            T = sort.quick_sort_rand(arr,0,len(arr)-1)
         case _:
             print("Nieprawidłowa opcja")
     return T

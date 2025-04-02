@@ -59,18 +59,15 @@ def shell_sort(arr):
 #     quick_sort(..., lambda arr, l ,p : arr[l])
     
 
-def quick_sort(arr,p,r,random=False):
+def quick_sort(arr,p,r,piv_func):
     if p<r:
-        q=q_pivot(arr,p,r,random)#,pivot_f
-        quick_sort(arr,p,q-1,random)#,pivot_f
-        quick_sort(arr,q+1,r,random)#,pivot_f
+        q=partition(arr,p,r,piv_func)#,pivot_f
+        quick_sort(arr,p,q-1,piv_func)#,pivot_f
+        quick_sort(arr,q+1,r,piv_func)#,pivot_f
     return arr
 
-def q_pivot(arr,p,r,random):#,pivot_f):
-    if random:
-        q= randint(p,r)
-        arr[p],arr[q]=arr[q],arr[p] #losowy element nie jest ułożony, trzeba go traktowac jak p przy lefcie
-    pivot= arr[p] #pivot_f
+def partition(arr,p,r,piv_func):#,pivot_f):
+    pivot=piv_func(arr,p,r) #pivot_f
     i=p+1
     j=r
     while True:
@@ -85,7 +82,15 @@ def q_pivot(arr,p,r,random):#,pivot_f):
     arr[p],arr[j]= arr[j],arr[p]
     return j
 
-###
+def quick_sort_left(arr,p,r):
+    return quick_sort(arr,p,r,lambda arr,p,r: arr[p])
+
+def quick_sort_rand(arr,p,r):
+    def rand_p(arr,p,r):
+        q= randint(p,r)
+        arr[p],arr[q]=arr[q],arr[p]
+        return arr[p]
+    return quick_sort(arr,p,r,rand_p)
 
 def heap_sort(arr):
     n=len(arr) # czy len kosztuje czas? imo wiecej niz funkcja z przypisana wartoscia
@@ -107,3 +112,7 @@ def heap_sort_helper(arr,n,i):
     if maxi!=i:
         arr[i],arr[maxi]=arr[maxi],arr[i]
         heap_sort_helper(arr,n,maxi)
+
+
+T = [123,123,131,23,52,1,352,1,2352,1867]
+print(quick_sort_rand(T,0,len(T)-1))
