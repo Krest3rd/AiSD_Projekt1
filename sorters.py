@@ -33,13 +33,15 @@ def selection_sort(arr):
 def shell_sort(arr):
     length = len(arr)
     k = 1
-    Przyrosty = [1]
-    while Przyrosty[-1] < length:
-        Przyrosty.append((4**k)+(3*2**(k-1))+1)
+    przyrost = 0
+    while przyrost < length:
+        przyrost = (4**k)+(3*2**(k-1))+1
         k += 1
 
-    for gap in Przyrosty[::-1]:
-        insertion_sort(arr,gap)
+    while k >= 0:
+        insertion_sort(arr,przyrost)
+        k -= 1
+        przyrost = (4**k)+(3*2**(k-1))+1
     return arr
 
         # for i in range(0,przyrost):
@@ -50,18 +52,25 @@ def shell_sort(arr):
         #         l += przyrost
 
 
+# def quick_sort_left(...):
+#     def pivot_left(arr, l ,h):
+#         return arr[l]
+#     quick_sort(..., pivot_left)
+#     quick_sort(..., lambda arr, l ,p : arr[l])
+    
+
 def quick_sort(arr,p,r,random=False):
     if p<r:
-        q=q_pivot(arr,p,r,random)
-        quick_sort(arr,p,q-1,random)
-        quick_sort(arr,q+1,r,random)
+        q=q_pivot(arr,p,r,random)#,pivot_f
+        quick_sort(arr,p,q-1,random)#,pivot_f
+        quick_sort(arr,q+1,r,random)#,pivot_f
     return arr
 
-def q_pivot(arr,p,r,random):
+def q_pivot(arr,p,r,random):#,pivot_f):
     if random:
         q= randint(p,r)
         arr[p],arr[q]=arr[q],arr[p] #losowy element nie jest ułożony, trzeba go traktowac jak p przy lefcie
-    pivot= arr[p]
+    pivot= arr[p] #pivot_f
     i=p+1
     j=r
     while True:
