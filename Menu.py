@@ -84,17 +84,17 @@ def Sorting(arr):
 def AlgSelect(arr,n):
     T =[]
     match n:
-        case "1":
+        case 1:
             T = sort.insertion_sort(arr)
-        case "2":
+        case 2:
             T = sort.shell_sort(arr)
-        case "3":
+        case 3:
             T = sort.selection_sort(arr)
-        case "4":
+        case 4:
             T = sort.heap_sort(arr)
-        case "5":
+        case 5:
             T = sort.quick_sort(arr,0,len(arr)-1)
-        case "6":
+        case 6:
             T = sort.quick_sort(arr,0,len(arr)-1,random=True)
         case _:
             print("Nieprawidłowa opcja")

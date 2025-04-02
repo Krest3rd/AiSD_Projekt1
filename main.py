@@ -5,14 +5,15 @@ from Menu import Menu,AlgSelect
 
 # Checks if the Python script is being run as the main program (not imported as a module)
 if __name__ == "__main__":
-    
+    sys.setrecursionlimit(1000000)
+
     if len(sys.argv) == 2 and sys.argv[1] == "--menu":
         Menu()
         print("Program ended sucessfully")
 
     elif len(sys.argv) == 3 and sys.argv[1] == "--algorithm":
         algorithm_number = int(sys.argv[2])
-
+        # print (type(algorithm_number))
         # Read input data from standard input until the end of file (EOF)
         input=sys.stdin.read().split()
         try:
