@@ -43,20 +43,6 @@ def shell_sort(arr):
         k -= 1
         przyrost = (4**k)+(3*2**(k-1))+1
     return arr
-
-        # for i in range(0,przyrost):
-        #     temp = insertion_sort(arr[i:length:przyrost])
-        #     l = i
-        #     for j in temp:
-        #         T[l] = j
-        #         l += przyrost
-
-
-# def quick_sort_left(...):
-#     def pivot_left(arr, l ,h):
-#         return arr[l]
-#     quick_sort(..., pivot_left)
-#     quick_sort(..., lambda arr, l ,p : arr[l])
     
 
 def quick_sort(arr,p,r,piv_func):
@@ -112,7 +98,3 @@ def heap_sort_helper(arr,n,i):
     if maxi!=i:
         arr[i],arr[maxi]=arr[maxi],arr[i]
         heap_sort_helper(arr,n,maxi)
-
-
-T = [123,123,131,23,52,1,352,1,2352,1867]
-print(quick_sort_rand(T,0,len(T)-1))
